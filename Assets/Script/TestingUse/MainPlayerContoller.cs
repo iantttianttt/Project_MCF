@@ -34,6 +34,7 @@ public class MainPlayerContoller : MonoBehaviour {
 	public bool isMouseOnPlayer;
 	public List<GameObject> enemyList;
 	public GameObject mainCamera;
+	public bool groundCheak;
 	public bool isGrounded;
 
 	private Animator anim;
@@ -46,7 +47,7 @@ public class MainPlayerContoller : MonoBehaviour {
 	private float yVelocity = 0.0f;
 	private Ray r;
 	private RaycastHit hit;
-	private float disToGround;
+	private float disToGround = 0f;
 
 
 	void Awake(){
@@ -60,6 +61,7 @@ public class MainPlayerContoller : MonoBehaviour {
 		enemyList.Clear ();
 		disToGround = GetComponent<Collider>().bounds.extents.y;
 		attackState = AttackState.Falling;
+		groundCheak = true;
 	}
 
 
@@ -106,11 +108,19 @@ public class MainPlayerContoller : MonoBehaviour {
 
 	void TargetMousePointAdjust () {
 		if (curMusePos.y <= groundHigh) {
+			isGrounded = true;
+			groundCheak = false;
 			curMusePos.y = groundHigh;
+		} else {
+			groundCheak = true;
 		}
 
 		if (basicPos.position.y <= groundHigh) {
-			basicPos.position = new Vector3(basicPos.position.x, groundHigh,basicPos.position.z);
+			isGrounded = true;
+			groundCheak = false;
+			basicPos.position = new Vector3 (basicPos.position.x, groundHigh, basicPos.position.z);
+		} else {
+			groundCheak = true;
 		}
 	}
 
@@ -162,6 +172,9 @@ public class MainPlayerContoller : MonoBehaviour {
 	}
 
 	void CheckGrounded () {
+		if (groundCheak == false) {
+			return;
+		}
 		RaycastHit hitG;
 		if (Physics.Raycast (this.transform.position, -Vector3.up, out hitG, disToGround + 0.1f)) {
 			if (hitG.collider.tag == "Ground") {
@@ -231,7 +244,7 @@ public class MainPlayerContoller : MonoBehaviour {
 
 
 	#region Logic
-
+	 
 	IEnumerator AttackEnemy () {
 		switch (attackType) {
 		case AttackType.Move:
@@ -262,6 +275,7 @@ public class MainPlayerContoller : MonoBehaviour {
 					yield return null;
 				}
 				attackState = AttackState.Stay;
+				groundCheak = true;
 				yield break;
 			} else if (isGrounded == false) {
 				attackState = AttackState.Attacking;
@@ -278,6 +292,7 @@ public class MainPlayerContoller : MonoBehaviour {
 				yield return new WaitForSeconds (attackStayTime);
 
 				attackState = AttackState.Falling;
+				Debug.Log ("A");
 				while (isGrounded == false) {
 					yield return null;
 				}

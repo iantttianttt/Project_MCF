@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{EFBD1312-BEE4-581C-335B-65D70FFCB5DA}</ProjectGuid>
+    <ProjectGuid>{72B540B9-1138-C773-BBA9-C355F1687674}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -55,6 +55,7 @@
      <Compile Include="Assets\Script\TestingUse\EnemyAI.cs" />
      <Compile Include="Assets\Script\TestingUse\EnemyCreater.cs" />
      <Compile Include="Assets\Script\TestingUse\MainPlayerContoller.cs" />
+     <Compile Include="Assets\Script\TestingUse\MainPlayerContoller1.cs" />
      <Compile Include="Assets\Script\TestingUse\MouseTrackingCollider.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Unity5.3.3/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
